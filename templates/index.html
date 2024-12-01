@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alifood</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='stile.css')}}">
+</head>
+<body>
+    <h1>Benvenuti nel sistema di prenotazione online!</h1>
+    <img src="{{ url_for('static', filename='logo.png')}}">
+    <form action="/add_prenotazione" method="POST">
+        <fieldset>
+            <legend>Dati Cliente</legend>
+            <table>
+                <tr>
+                    <td>Nome</td>
+                    <td><input name="nome" type="text" required></td>
+                </tr>
+                <tr>
+                    <td>Cognome</td>
+                    <td><input name="cognome" type="text" required></td>
+                </tr>
+                <tr>
+                    <td>Telefono</td>
+                    <td><input name="telefono" type="text" required></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><input name="email" type="email" required></td>
+                </tr>
+                <tr>
+                    <td>Posti a sedere</td>
+                    <td><input name="numPosti" type="number" min="1" max="10" required></td>
+                </tr>
+                <tr>
+                    <td>Data e ora</td>
+                    <td><input name="dataOra" type="datetime-local" required></td>
+                </tr>
+            </table>
+            </header>
+            <table>
+                <tr>
+                    <td><input type="submit" value="Prenota"></td>
+                    <td><input type="reset" value="Cancella"></td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+    <p>Lista prenotazioni</p>
+    <button onclick="myFunction()">Hide / Show</button>
+    <script>
+        function myFunction() {
+        var lista = document.getElementById("lista");
+        if (lista.style.display == "none"){
+            lista.style.display = "block"
+        }
+        else{
+            lista.style.display = "none"
+        }
+        }
+    </script>
+    <ol id="lista">
+        {% for text in prenotazioni %}
+        <li>
+            <p>ID prenotazione: {{ text[0] }} | Nome: {{ text[1] }} | Cognome: {{ text[2] }} | Telefono: {{ text[3] }} | Email: {{ text[4] }} | Numero posti: {{ text[5] }} | Data e ora prenotazione: {{ text[6] }}</p>
+            <table>
+                <tr>
+                    <td>
+                        <form action="/update/{{ text[0] }}" method="POST">
+                            <button id="btnModifica" type="submit">Modifica</button>
+                        </form>                 
+                    </td> 
+                    <td>                   
+                        <form action="/delete_prenotazione/{{ text[0] }}" method="POST">
+                            <button id="btnElimina" type="submit">Elimina</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </li>
+        {% endfor %}        
+    </ol>
+</body>
+</html>

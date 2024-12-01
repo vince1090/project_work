@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alifood - modifica</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='stile.css')}}">
+</head>
+<body>
+    {% for text in prenotazioni %}
+    <h1>Modifica prenotazione N° {{ text[0] }}</h1>
+    <img src="{{ url_for('static', filename='logo.png')}}">
+    <form action="/update_prenotazione/{{ text[0] }}" method="POST">
+      <fieldset>
+          <legend>Dati Cliente</legend>
+          <table>
+              <tr>
+                  <td>Nome</td>
+                  <td><input name="newNome" type="text" value="{{ text[1] }}" required></td>
+              </tr>
+              <tr>
+                  <td>Cognome</td>
+                  <td><input name="newCognome" type="text" value="{{ text[2] }}" required></td>
+              </tr>
+              <tr>
+                  <td>Telefono</td>
+                  <td><input name="newTelefono" type="text" value="{{ text[3] }}" required></td>
+              </tr>
+              <tr>
+                  <td>Email</td>
+                  <td><input name="newEmail" type="email" value="{{ text[4] }}" required></td>
+              </tr>
+              <tr>
+                  <td>Posti a sedere</td>
+                  <td><input name="newNumPosti" type="number" min="1" max="10" value="{{ text[5] }}" required></td>
+              </tr>
+              <tr>
+                  <td>Data e ora</td>
+                  <td><input name="newDataOra" type="datetime-local" value="{{ text[6] }}" required></td>
+              </tr>
+          </table>
+          </header>
+          <table>
+              <tr>
+                  <td><input type="submit" value="Modifica"></td>
+                  <td><input type="button" onclick="history.back();" value="Indietro"></td>
+              </tr>
+          </table>
+      </fieldset>
+  </form>
+  {% endfor %}        
+</body>
+</html>
